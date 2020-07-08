@@ -6,6 +6,9 @@ var app = new Framework7({
 });
 var mainView = app.views.create('.view');
 
+var cam_running = true;
+var stream;
+
 window.addEventListener("load", async () => {
 	navigator.permissions.query({name: 'camera'}).then((permissionObj) => {
 		if (permissionObj.state != "granted") {
@@ -17,6 +20,7 @@ window.addEventListener("load", async () => {
 		}
 	}).catch((e) => {});
 	document.querySelector("#splash button").classList.add("animate__fadeInDown");
+	//app.navbar.getPageByEl(document.querySelector('#effects .navbar')).hide();
 });
 
 document.querySelector("#splash button").addEventListener("click", () => {
@@ -24,7 +28,7 @@ document.querySelector("#splash button").addEventListener("click", () => {
 		if (permissionObj.state == "granted") {
 			await faceapi.loadTinyFaceDetectorModel('assets/models/tiny_face_detector_model-weights_manifest.json')
 			await faceapi.loadFaceLandmarkTinyModel('assets/models/face_landmark_68_tiny_model-weights_manifest.json')
-			const stream = await navigator.mediaDevices.getUserMedia({ video: {} })
+			stream = await navigator.mediaDevices.getUserMedia({ video: {} })
 			const videoEl = document.getElementById('inputVideo')
 			videoEl.srcObject = stream;
 		} else {
@@ -69,7 +73,8 @@ function drawLandmarks(dimensions, canvas, results, withBoxes = false) {
 
   
 ////////////////////////// The 2 Main functions ///////////////////////////////////////////  
-  
+
+
 async function onPlay() {
 	document.querySelector(".cam-cont").style.transform = "translate(-"+(document.querySelector(".cam-cont video").clientWidth/2-window.innerWidth/2).toString()+"px, 0px)";
 	document.querySelector("#splash").classList.add("animate__rotateOutDownLeft");
@@ -87,8 +92,36 @@ async function onPlay() {
         
    } else {
 		 document.getElementById('overlay').getContext('2d').clearRect(0, 0, document.getElementById('overlay').width, document.getElementById('overlay').height);
-		 if (document.querySelector("#cam-tick-btn").classList.contains("disabled") == false) { document.querySelector("#cam-tick-btn").classList.add("disabled"); }
+		 //if (document.querySelector("#cam-tick-btn").classList.contains("disabled") == false) { document.querySelector("#cam-tick-btn").classList.add("disabled"); }
 	 }
 
-    setTimeout(() => onPlay())
+    setTimeout(() => { if (cam_running) { onPlay() }}, 50)
 }
+
+const cropCanvas = (sourceCanvas,left,top,width,height) => {
+    let destCanvas = document.createElement('canvas');
+    destCanvas.width = width;
+    destCanvas.height = height;
+    destCanvas.getContext("2d").drawImage(
+        sourceCanvas,
+        left,top,width,height,  // source rect with content to crop
+        0,0,width,height);      // newCanvas, same size as source rect
+    return destCanvas;
+}
+
+document.querySelector("#cam-tick-btn").addEventListener("click", () => {
+	cam_running = false;
+ 	document.getElementById('overlay').getContext('2d').clearRect(0, 0, document.getElementById('overlay').width, document.getElementById('overlay').height);
+	document.getElementById('overlay').getContext('2d').drawImage(document.getElementById('inputVideo'), 0,0, document.getElementById('overlay').width, document.getElementById('overlay').height);
+	var snap = cropCanvas(document.getElementById('overlay'),(document.getElementById('overlay').height/document.querySelector(".cam-cont video").clientHeight)*(document.querySelector(".cam-cont video").clientWidth/2-window.innerWidth/2),0,(document.getElementById('overlay').height/document.querySelector(".cam-cont video").clientHeight)*window.innerWidth,document.getElementById('overlay').height).toDataURL("image/png");
+	document.querySelector("#effects img").src = snap;
+	setTimeout(() => {
+		document.querySelector('#effects').style.display = "block";
+		document.querySelector('#overlay').remove();
+		document.querySelector('#cam video').remove();
+		document.querySelector("#cam-tick-btn").classList.add("animate__zoomOut");
+		setTimeout(() => {
+			document.querySelector('#cam').remove();
+		}, 1000);
+	}, 100);
+});

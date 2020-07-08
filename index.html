@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Hair Changer</title>
 	<link rel="stylesheet" href="assets/css/animate.min.css" />
 	<link rel="stylesheet" href="assets/css/f7.min.css" />
@@ -18,14 +18,32 @@
 						<video onplay="onPlay(this);" id="inputVideo" autoplay muted height="100%"></video>
 						<canvas id="overlay"></canvas>
 					</div>
-					<div class="fab fab-center-bottom" id="cam-tick-btn">
-						<a href="#">
-							<i class="icon material-icons md-only">done</i>
-						</a>
+					<div class="cam-tick-btn-cont">
+						<div class="fab animate__animated animate__fast" id="cam-tick-btn">
+							<a href="#">
+								<i class="icon material-icons md-only">done</i>
+							</a>
+						</div>
 					</div>
 				</div>
 				<div id="splash" class="page-page animate__animated">
 					<button class="col button button-raised animate__animated">Start</button>
+				</div>
+				<div id="effects" class="page-page animate__animated">
+					<div class="navbar">
+						<div class="navbar-bg"></div>
+						<div class="navbar-inner">
+							<div class="left">
+								<a class="link back">
+									<i class="icon icon-back"></i>
+									<span class="if-not-md">Back</span>
+								</a>
+							</div>
+							<div class="title">Static Navbar</div>
+							<div class="right"></div>
+						</div>
+					</div>
+					<div class="effects-cont"><img src="" style="height: 100%; width: 100%;" /></div>
 				</div>
 			</div>
 		</div>

@@ -150,16 +150,12 @@ window.dragMoveListener = dragMoveListener
 }
 var gestureArea = document.querySelector('#hairstyle');
 var scaleElement = document.querySelector('#hairstyle img');
-var resetTimeout;
 
 interact(gestureArea)
   .gesturable({
     listeners: {
       start (event) {
         angleScale.angle -= event.angle
-
-        clearTimeout(resetTimeout)
-        scaleElement.classList.remove('reset')
       },
       move (event) {
         // document.body.appendChild(new Text(event.scale))
@@ -172,13 +168,6 @@ interact(gestureArea)
 
         // uses the dragMoveListener from the draggable demo above
         dragMoveListener(event)
-      },
-      end (event) {
-        angleScale.angle = angleScale.angle + event.angle
-        angleScale.scale = angleScale.scale * event.scale
-
-        resetTimeout = setTimeout(reset, 1000)
-        scaleElement.classList.add('reset')
       }
     }
   })

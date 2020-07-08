@@ -1,0 +1,1 @@
+var hairstyles = ["assets/images/style1.png","assets/images/style2.png","assets/images/style3.png","assets/images/style4.png","assets/images/style5.png","assets/images/style6.png"];

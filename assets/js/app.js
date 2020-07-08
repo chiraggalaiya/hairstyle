@@ -20,6 +20,9 @@ window.addEventListener("load", async () => {
 		}
 	}).catch((e) => {});
 	document.querySelector("#splash button").classList.add("animate__fadeInDown");
+	for (var i = 0; i < hairstyles.length; i++) {
+		document.querySelector(".hairstyle-selector").innerHTML += '<div class="card" onclick="changeHair(this);"><img src="'+hairstyles[i]+'" /></div>';
+	}
 });
 
 document.querySelector("#splash button").addEventListener("click", () => {
@@ -121,7 +124,82 @@ document.querySelector("#cam-tick-btn").addEventListener("click", () => {
 		document.querySelector("#cam-tick-btn").classList.add("animate__zoomOut");
 		setTimeout(() => {
 			document.querySelector('#cam').remove();
-			document.querySelector("#effects .effects-cont").style.transform = "scale(.7) translate(0px, -100px)";
+			document.querySelector("#effects .effects-cont").style.transform = "scale(.7)";
+			document.querySelector("#effects .effects-cont").style.top = "-8%";
 		}, 1000);
 	}, 100);
 });
+function dragMoveListener (event) {
+  var target = event.target
+  // keep the dragged position in the data-x/data-y attributes
+  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+  // translate the element
+  target.style.webkitTransform =
+    target.style.transform =
+      'translate(' + x + 'px, ' + y + 'px)'
+
+  // update the posiion attributes
+  target.setAttribute('data-x', x)
+  target.setAttribute('data-y', y)
+}
+
+// this function is used later in the resizing and gesture demos
+window.dragMoveListener = dragMoveListener
+		var angleScale = {
+  angle: 0,
+  scale: 1
+}
+var gestureArea = document.querySelector('#hairstyle');
+var scaleElement = document.querySelector('#hairstyle img');
+var resetTimeout;
+
+interact(gestureArea)
+  .gesturable({
+    listeners: {
+      start (event) {
+        angleScale.angle -= event.angle
+
+        clearTimeout(resetTimeout)
+        scaleElement.classList.remove('reset')
+      },
+      move (event) {
+        // document.body.appendChild(new Text(event.scale))
+        var currentAngle = event.angle + angleScale.angle
+        var currentScale = event.scale * angleScale.scale
+
+        scaleElement.style.webkitTransform =
+        scaleElement.style.transform =
+          'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'
+
+        // uses the dragMoveListener from the draggable demo above
+        dragMoveListener(event)
+      },
+      end (event) {
+        angleScale.angle = angleScale.angle + event.angle
+        angleScale.scale = angleScale.scale * event.scale
+
+        resetTimeout = setTimeout(reset, 1000)
+        scaleElement.classList.add('reset')
+      }
+    }
+  })
+  .draggable({
+    listeners: { move: dragMoveListener },
+	modifiers: [
+      interact.modifiers.restrict({
+        restriction: document.querySelector(".effects-cont")
+      })]
+  })
+
+function changeHair(t) {
+	document.querySelector(".selected").classList.remove("selected");
+	t.classList.add("selected");
+	if (t.innerHTML.includes("<p")) {
+		document.querySelector("#hairstyle").style.display = "none";
+	} else {
+		document.querySelector("#hairstyle").style.display = "block";
+		document.querySelector("#hairstyle img").src = t.querySelector("img").src;
+	}
+}

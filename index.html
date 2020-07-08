@@ -27,16 +27,29 @@
 					</div>
 				</div>
 				<div id="splash" class="page-page animate__animated">
+
 					<button class="col button button-raised animate__animated">Start</button>
 				</div>
 				<div id="effects" class="page-page animate__animated">
-					<div class="effects-cont"><img src="" style="height: 100%; width: 100%;" /></div>
+					<div class="effects-cont">
+						<img src="" class="snapshot" />
+						<div id="hairstyle">
+							<img src="">
+						</div>
+					</div>
+					<div class="hairstyle-selector">
+						<div class="card selected" onclick="changeHair(this);">
+							<p>NONE</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 <script src="assets/js/f7.min.js"></script>
-<script src="assets/js/app.js"></script>
+<script src="assets/js/interact.min.js"></script>
 <script src="assets/js/face-api.min.js"></script>
+<script src="assets/js/hairstyles.js"></script>
+<script src="assets/js/app.js"></script>
 </body>
 </html>

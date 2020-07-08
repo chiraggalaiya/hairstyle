@@ -9,6 +9,22 @@ var mainView = app.views.create('.view');
 var cam_running = true;
 var stream;
 
+var gestureArea = document.querySelector('#hairstyle');
+var scaleElement = document.querySelector('#hairstyle img');
+function dragMoveListener (event) {
+  var target = event.target;
+  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+	target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+  target.setAttribute('data-x', x);
+  target.setAttribute('data-y', y);
+}
+window.dragMoveListener = dragMoveListener;
+var angleScale = {
+  angle: 0,
+  scale: 1
+}
+
 window.addEventListener("load", async () => {
 	navigator.permissions.query({name: 'camera'}).then((permissionObj) => {
 		if (permissionObj.state != "granted") {
@@ -23,6 +39,25 @@ window.addEventListener("load", async () => {
 	for (var i = 0; i < hairstyles.length; i++) {
 		document.querySelector(".hairstyle-selector").innerHTML += '<div class="card" onclick="changeHair(this);"><img src="'+hairstyles[i]+'" /></div>';
 	}
+	interact(gestureArea).gesturable({
+		listeners: {
+			start (event) {
+				angleScale.angle -= event.angle;
+			}, move (event) {
+				var currentAngle = event.angle + angleScale.angle;
+				var currentScale = event.scale * angleScale.scale;
+				scaleElement.style.webkitTransform = scaleElement.style.transform = 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')';
+				dragMoveListener(event);
+			}
+		}
+	}).draggable({
+		listeners: { move: dragMoveListener },
+		modifiers: [
+			interact.modifiers.restrict({
+				restriction: document.querySelector(".effects-cont")
+			})
+		]
+	});
 });
 
 document.querySelector("#splash button").addEventListener("click", () => {
@@ -71,11 +106,6 @@ function drawLandmarks(dimensions, canvas, results, withBoxes = false) {
   const drawLandmarksOptions = { lineWidth: 2, drawLines: true, color: '#2affcf' }
   faceapi.drawLandmarks(canvas, faceLandmarks, drawLandmarksOptions)
 }    
-    
-
-  
-////////////////////////// The 2 Main functions ///////////////////////////////////////////  
-
 
 async function onPlay() {
 	document.querySelector(".cam-cont").style.transform = "translate(-"+(document.querySelector(".cam-cont video").clientWidth/2-window.innerWidth/2).toString()+"px, 0px)";
@@ -89,15 +119,16 @@ async function onPlay() {
    if (result) {
 		 if (document.querySelector("#cam-tick-btn").classList.contains("disabled")) { document.querySelector("#cam-tick-btn").classList.remove("disabled"); }
        drawLandmarks(videoEl, document.getElementById('overlay'), [result], false)
-     
       //console.log(Math.round(result._unshiftedLandmarks._positions[0]._x), Math.round(result._unshiftedLandmarks._positions[0]._y));
-        
    } else {
 		 document.getElementById('overlay').getContext('2d').clearRect(0, 0, document.getElementById('overlay').width, document.getElementById('overlay').height);
-		 //if (document.querySelector("#cam-tick-btn").classList.contains("disabled") == false) { document.querySelector("#cam-tick-btn").classList.add("disabled"); }
+		 if (document.querySelector("#cam-tick-btn").classList.contains("disabled") == false) { document.querySelector("#cam-tick-btn").classList.add("disabled"); }
 	 }
-
-    setTimeout(() => { if (cam_running) { onPlay() }}, 50)
+	setTimeout(() => {
+		if (cam_running) {
+			onPlay()
+		}
+	}, 50);
 }
 
 const cropCanvas = (sourceCanvas,left,top,width,height) => {
@@ -126,58 +157,6 @@ document.querySelector("#cam-tick-btn").addEventListener("click", () => {
 			document.querySelector('#cam').remove();
 			document.querySelector("#effects .effects-cont").style.transform = "scale(.7)";
 			document.querySelector("#effects .effects-cont").style.top = "-8%";
-			function dragMoveListener (event) {
-  var target = event.target
-  // keep the dragged position in the data-x/data-y attributes
-  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
-
-  // translate the element
-  target.style.webkitTransform =
-    target.style.transform =
-      'translate(' + x + 'px, ' + y + 'px)'
-
-  // update the posiion attributes
-  target.setAttribute('data-x', x)
-  target.setAttribute('data-y', y)
-}
-
-// this function is used later in the resizing and gesture demos
-window.dragMoveListener = dragMoveListener
-		var angleScale = {
-  angle: 0,
-  scale: 1
-}
-var gestureArea = document.querySelector('#hairstyle');
-var scaleElement = document.querySelector('#hairstyle img');
-
-interact(gestureArea)
-  .gesturable({
-    listeners: {
-      start (event) {
-        angleScale.angle -= event.angle
-      },
-      move (event) {
-        // document.body.appendChild(new Text(event.scale))
-        var currentAngle = event.angle + angleScale.angle
-        var currentScale = event.scale * angleScale.scale
-
-        scaleElement.style.webkitTransform =
-        scaleElement.style.transform =
-          'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'
-
-        // uses the dragMoveListener from the draggable demo above
-        dragMoveListener(event)
-      }
-    }
-  })
-  .draggable({
-    listeners: { move: dragMoveListener },
-	modifiers: [
-      interact.modifiers.restrict({
-        restriction: document.querySelector(".effects-cont")
-      })]
-  })
 		}, 1000);
 	}, 100);
 });

@@ -1,0 +1,49 @@
+.page-page {
+	position: absolute;
+}
+
+#splash {
+	width: 100%;
+	height: 100%;
+	background-color: #2affcf;
+}
+
+#splash button {
+	width: calc(100% - 68px);
+	height: 56px;
+	margin: 0px 34px;
+	position: absolute;
+	bottom: 30px;
+	color: black;
+	background-color: white;
+	font-size: 16px;
+	font-weight: 500;
+	opacity: 0;
+}
+
+#cam {
+	width: 100%;
+	height: 100%;
+	background-color: #2affcf;
+	--animate-duration: 1.25s;
+}
+
+#cam .fab {
+	z-index: 0;
+}
+
+#cam .fab a {
+	background-color: #2affcf;
+}
+
+.cam-cont {
+	height: 100%;
+	position: relative;
+}
+
+#overlay {
+	position:absolute;
+	top:0px;
+	left: 0px;
+	height: 100%;
+}

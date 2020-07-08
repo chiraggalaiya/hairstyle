@@ -1,1 +1,37 @@
-<h1>Fuck oFf</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hair Changer</title>
+	<link rel="stylesheet" href="assets/css/animate.min.css" />
+	<link rel="stylesheet" href="assets/css/f7.min.css" />
+	<link rel="stylesheet" href="assets/css/fonts.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="color-theme-white">
+	<div id="app">
+    <div class="view view-main">
+      <div class="page">
+				<div id="cam" class="page-page animate__animated">
+					<div class="cam-cont">
+						<video onplay="onPlay(this);" id="inputVideo" autoplay muted height="100%"></video>
+						<canvas id="overlay"></canvas>
+					</div>
+					<div class="fab fab-center-bottom" id="cam-tick-btn">
+						<a href="#">
+							<i class="icon material-icons md-only">done</i>
+						</a>
+					</div>
+				</div>
+				<div id="splash" class="page-page animate__animated">
+					<button class="col button button-raised animate__animated">Start</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="assets/js/f7.min.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/face-api.min.js"></script>
+</body>
+</html>

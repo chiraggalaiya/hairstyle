@@ -126,10 +126,7 @@ document.querySelector("#cam-tick-btn").addEventListener("click", () => {
 			document.querySelector('#cam').remove();
 			document.querySelector("#effects .effects-cont").style.transform = "scale(.7)";
 			document.querySelector("#effects .effects-cont").style.top = "-8%";
-		}, 1000);
-	}, 100);
-});
-function dragMoveListener (event) {
+			function dragMoveListener (event) {
   var target = event.target
   // keep the dragged position in the data-x/data-y attributes
   var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
@@ -192,6 +189,9 @@ interact(gestureArea)
         restriction: document.querySelector(".effects-cont")
       })]
   })
+		}, 1000);
+	}, 100);
+});
 
 function changeHair(t) {
 	document.querySelector(".selected").classList.remove("selected");

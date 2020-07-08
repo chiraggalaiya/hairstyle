@@ -20,7 +20,6 @@ window.addEventListener("load", async () => {
 		}
 	}).catch((e) => {});
 	document.querySelector("#splash button").classList.add("animate__fadeInDown");
-	//app.navbar.getPageByEl(document.querySelector('#effects .navbar')).hide();
 });
 
 document.querySelector("#splash button").addEventListener("click", () => {
@@ -122,6 +121,7 @@ document.querySelector("#cam-tick-btn").addEventListener("click", () => {
 		document.querySelector("#cam-tick-btn").classList.add("animate__zoomOut");
 		setTimeout(() => {
 			document.querySelector('#cam').remove();
+			document.querySelector("#effects .effects-cont").style.transform = "scale(.7) translate(0px, -100px)";
 		}, 1000);
 	}, 100);
 });

@@ -12,6 +12,7 @@ var location_permission = app.toast.create({text: 'Please grant location permiss
 
 var cam_running = true;
 var stream;
+var first_run_of_maps = true;
 
 var gestureArea = document.querySelector('#hairstyle');
 var scaleElement = document.querySelector('#hairstyle img');
@@ -39,7 +40,15 @@ window.addEventListener("load", async () => {
 			},(e)=>{});
 		}
 	}).catch((e) => {});
-	document.querySelector("#splash button").classList.add("animate__fadeInDown");
+	setTimeout(() => {
+		document.querySelector("#splash .icon").classList.add("animate__fadeInDown");
+		setTimeout(() => {
+			document.querySelector("#splash .name").classList.add("animate__fadeInDown");
+			setTimeout(() => {
+				document.querySelector("#splash button").classList.add("animate__fadeInDown");
+			}, 750);
+		}, 300);
+	}, 100);
 	for (var i = 0; i < hairstyles.length; i++) {
 		document.querySelector(".hairstyle-selector").innerHTML += '<div class="card" onclick="changeHair(this);"><img src="'+hairstyles[i]+'" /></div>';
 	}
@@ -63,7 +72,6 @@ window.addEventListener("load", async () => {
 		]
 	});
 	initMaps();
-	locateNearby();
 });
 
 document.querySelector("#splash button").addEventListener("click", () => {
@@ -183,7 +191,10 @@ document.querySelector("#reload_maps").addEventListener("click", () => {
 });
 
 document.querySelector("#nearby_maps").addEventListener("click", () => {
-	locateNearby()
+	locateNearby();
 });
 
-//mapsPopup.open();
+document.querySelector("#open_maps_btn").addEventListener("click", () => {
+	if (first_run_of_maps) { locateNearby(); first_run_of_maps = false; }
+	mapsPopup.open();
+});

@@ -11,7 +11,7 @@ img {  user-select: none; -webkit-user-select: none; }
 #splash {
 	width: 100%;
 	height: 100%;
-	background-color: #2affcf;
+	background-image: linear-gradient(#a5fdf8, #2affcf);
 }
 
 #splash button {
@@ -68,7 +68,7 @@ img {  user-select: none; -webkit-user-select: none; }
 
 #effects {
 	display: none;
-	background-color: #2affcf;
+	background-image: linear-gradient(#a5fdf8, #2affcf);
 	z-index: -1;
 }
 
@@ -226,4 +226,30 @@ img {  user-select: none; -webkit-user-select: none; }
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: -1;
+}
+
+#open_maps_btn i {
+	font-size: 28px;
+	color: black;
+}
+
+.splash-content {
+	width: 225px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -70%);
+}
+
+.splash-content img {
+	width: 100%;
+}
+
+.splash-content .name {
+	width: 100%;
+	margin-top: 60px;
+}
+
+#splash .name, #splash .icon {
+	opacity: 0;
 }

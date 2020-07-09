@@ -4,7 +4,7 @@
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#2AFFCF",
-  "theme_color": "#2AFFCF", 
+  "theme_color": "#a5fdf8", 
   "orientation": "portrait-primary",
   "icons": [
     {

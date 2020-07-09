@@ -21,7 +21,7 @@
 						<canvas id="overlay"></canvas>
 					</div>
 					<div class="cam-tick-btn-cont">
-						<div class="fab animate__animated animate__fast" id="cam-tick-btn">
+						<div class="fab animate__animated" id="cam-tick-btn">
 							<a href="#">
 								<i class="icon material-icons md-only">done</i>
 							</a>
@@ -29,7 +29,7 @@
 					</div>
 				</div>
 				<div id="splash" class="page-page animate__animated">
-
+					<!-- add more content here -->
 					<button class="col button button-raised animate__animated">Start</button>
 				</div>
 				<div id="effects" class="page-page animate__animated">
@@ -44,14 +44,37 @@
 							<p>NONE</p>
 						</div>
 					</div>
+					<a class="link icon-only" id="open_maps_btn" onclick="mapsPopup.open();">
+						<i class="material-icons md-only">place</i>
+					</a>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div class="popup maps-popup">
+		<div class="page">
+			<div class="swipe-handler"></div>
+			<div class="page-content">
+				<div id="map"></div>
+			</div>
+			<div class="fab" id="reload_maps">
+				<a href="#">
+					<i class="icon material-icons md-only">search</i>
+				</a>
+			</div>
+			<div class="fab" id="nearby_maps">
+				<a href="#">
+					<i class="icon material-icons md-only">location_searching</i>
+				</a>
+			</div>
+		</div>
+	</div>
 <script src="assets/js/f7.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDik95G81ZyLbjLp-Nl7nx-C7WQ-nOw4jE&libraries=places"></script>
 <script src="assets/js/interact.min.js"></script>
 <script src="assets/js/face-api.min.js"></script>
 <script src="assets/js/hairstyles.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/maps.js"></script>
 </body>
 </html>

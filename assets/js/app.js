@@ -6,6 +6,10 @@ var app = new Framework7({
 });
 var mainView = app.views.create('.view');
 
+var mapsPopup = app.popup.create({el: '.maps-popup', swipeToClose: true, swipeHandler: '.swipe-handler'});
+var cam_permission = app.toast.create({text: 'Please grant camera permission', closeButton: true});
+var location_permission = app.toast.create({text: 'Please grant location permission', closeButton: true});
+
 var cam_running = true;
 var stream;
 
@@ -58,6 +62,8 @@ window.addEventListener("load", async () => {
 			})
 		]
 	});
+	initMaps();
+	locateNearby();
 });
 
 document.querySelector("#splash button").addEventListener("click", () => {
@@ -69,10 +75,7 @@ document.querySelector("#splash button").addEventListener("click", () => {
 			const videoEl = document.getElementById('inputVideo')
 			videoEl.srcObject = stream;
 		} else {
-			app.toast.create({
-				text: 'Please grant camera permission',
-				closeButton: true,
-			}).open();
+			cam_permission.open();
 			navigator.permissions.query({name: 'camera'}).then((permissionObj) => {
 				if (permissionObj.state != "granted") {
 					navigator.getUserMedia({video:true}, (s)=> {
@@ -154,6 +157,9 @@ document.querySelector("#cam-tick-btn").addEventListener("click", () => {
 		document.querySelector('#cam video').remove();
 		document.querySelector("#cam-tick-btn").classList.add("animate__zoomOut");
 		setTimeout(() => {
+			stream.getTracks().forEach(function(track) {
+				track.stop();
+			});
 			document.querySelector('#cam').remove();
 			document.querySelector("#effects .effects-cont").style.transform = "scale(.7)";
 			document.querySelector("#effects .effects-cont").style.top = "-8%";
@@ -171,3 +177,13 @@ function changeHair(t) {
 		document.querySelector("#hairstyle img").src = t.querySelector("img").src;
 	}
 }
+
+document.querySelector("#reload_maps").addEventListener("click", () => {
+	addMarkers();
+});
+
+document.querySelector("#nearby_maps").addEventListener("click", () => {
+	locateNearby()
+});
+
+//mapsPopup.open();

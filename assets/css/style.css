@@ -1,6 +1,6 @@
-body {
-	overscroll-behavior: contain;
-}
+body { overscroll-behavior: contain; }
+
+img {  user-select: none; -webkit-user-select: none; }
 
 .page-page {
 	position: absolute;
@@ -91,6 +91,8 @@ body {
   max-width: 100%;
   margin: auto;
   touch-action: none;
+	user-select: none;
+	-webkit-user-select: none;
 }
 
 #hairstyle {
@@ -220,8 +222,8 @@ body {
 
 #open_maps_btn {
 	position: absolute;
-	top: 16px;
+	top: 3.5%;
 	left: 50%;
-	transform: translate(-50%, 0px);
+	transform: translate(-50%, -50%);
 	z-index: -1;
 }

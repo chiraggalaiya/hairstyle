@@ -46,9 +46,9 @@ window.addEventListener("load", async () => {
 			document.querySelector("#splash .name").classList.add("animate__fadeInDown");
 			setTimeout(() => {
 				document.querySelector("#splash button").classList.add("animate__fadeInDown");
-			}, 750);
-		}, 300);
-	}, 100);
+			}, 850);
+		}, 400);
+	}, 500);
 	for (var i = 0; i < hairstyles.length; i++) {
 		document.querySelector(".hairstyle-selector").innerHTML += '<div class="card" onclick="changeHair(this);"><img src="'+hairstyles[i]+'" /></div>';
 	}

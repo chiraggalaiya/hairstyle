@@ -1,0 +1,51 @@
+{
+  "name": "HairStyle",
+  "short_name": "HairStyle",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#2AFFCF",
+  "theme_color": "#2AFFCF", 
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/images/icon-w-bg-72x72.png",
+      "type": "image/png", 
+      "sizes": "72x72"
+    },
+    {
+      "src": "/assets/images/icon-w-bg-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/assets/images/icon-w-bg-128x128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/assets/images/icon-w-bg-144x144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/assets/images/icon-w-bg-152x152.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/assets/images/icon-w-bg-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/images/icon-w-bg-384x384.png",
+      "type": "image/png",
+      "sizes": "384x384"
+    }, 
+    {
+      "src": "/assets/images/icon-w-bg-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
